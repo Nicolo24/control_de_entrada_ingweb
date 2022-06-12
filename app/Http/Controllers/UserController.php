@@ -89,6 +89,7 @@ class UserController extends Controller
         request()->validate(User::$rules);
 
         $user->update($request->all());
+        $user->update(Hash::make($request['password']));
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
