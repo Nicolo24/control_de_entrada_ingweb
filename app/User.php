@@ -12,13 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property $email
  * @property $email_verified_at
  * @property $password
- * @property $phone
- * @property $id_casa
- * @property $type
+ * @property $persona_id
  * @property $remember_token
  * @property $created_at
  * @property $updated_at
  *
+ * @property Persona $persona
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -28,6 +27,7 @@ class User extends Model
     static $rules = [
 		'name' => 'required',
 		'email' => 'required',
+		'persona_id' => 'required',
     ];
 
     protected $perPage = 20;
@@ -37,8 +37,16 @@ class User extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','email','phone','id_casa','type'];
+    protected $fillable = ['name','email','persona_id'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function persona()
+    {
+        return $this->hasOne('App\Persona', 'id', 'persona_id');
+    }
+    
 
 }

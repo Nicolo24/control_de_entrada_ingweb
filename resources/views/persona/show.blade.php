@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $user->name ?? 'Show User' }}
+    {{ $persona->name ?? 'Show Persona' }}
 @endsection
 
 @section('content')
@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Show User</span>
+                            <span class="card-title">Show Persona</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('personas.index') }}"> Back</a>
                         </div>
                     </div>
 
@@ -22,15 +22,15 @@
                         
                         <div class="form-group">
                             <strong>Name:</strong>
-                            {{ $user->name }}
+                            {{ $persona->name }}
                         </div>
                         <div class="form-group">
-                            <strong>Email:</strong>
-                            {{ $user->email }}
+                            <strong>Phone:</strong>
+                            {{ $persona->phone }}
                         </div>
                         <div class="form-group">
-                            <strong>Persona Id:</strong>
-                            {{ $user->persona_id }}
+                            <strong>Casa Id:</strong>
+                            {{ $persona->casa_id }}
                         </div>
 
                     </div>

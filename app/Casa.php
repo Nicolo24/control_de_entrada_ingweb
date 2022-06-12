@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $created_at
  * @property $updated_at
  *
+ * @property Persona[] $personas
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -34,5 +35,13 @@ class Casa extends Model
     protected $fillable = ['friendly_id','latitude','longitude','phone'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function personas()
+    {
+        return $this->hasMany('App\Persona', 'casa_id', 'id');
+    }
+    
 
 }

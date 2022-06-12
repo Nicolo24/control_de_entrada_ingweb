@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CasaController;
+use App\Http\Controllers\PersonaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('users', UserController::class)->middleware('auth.admin');
-Route::resource('casas', CasaController::class)->middleware('auth.admin');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::resource('users', UserController::class)->middleware('auth');
+Route::resource('casas', CasaController::class)->middleware('auth');
+Route::resource('personas', PersonaController::class)->middleware('auth');
