@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personas', function (Blueprint $table) {
+        Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('hora_de_entrada');
-            $table->timestamp('hora_de_salida');
-            $table->foreign('persona_id')->references('id')->on('users');
+            $table->timestamp('hora_de_entrada')->nullable();
+            $table->timestamp('hora_de_salida')->nullable();
+            $table->foreignId('persona_id')->constrained();
+            $table->unsignedBigInteger('token_entrada');
+            $table->unsignedBigInteger('token_salida');
+            $table->foreign('token_entrada')->references('id')->on('tokens');
+            $table->foreign('token_salida')->references('id')->on('tokens');
             $table->timestamps();
         });
     }
