@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 /**
- * Class UserController
+ * Class RoleController
  * @package App\Http\Controllers
  */
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
+        $roles = Role::paginate();
 
-        return view('user.index', compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        return view('role.index', compact('roles'))
+            ->with('i', (request()->input('page', 1) - 1) * $roles->perPage());
     }
 
     /**
@@ -32,9 +31,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = new User();
-        $personas = \App\Persona::get();
-        return view('user.create', compact('user','personas'));
+        $role = new Role();
+        return view('role.create', compact('role'));
     }
 
     /**
@@ -45,12 +43,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
-        request()->validate(User::$rules);
-        
-        $user = User::create($request->all());
+        request()->validate(Role::$rules);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        $role = Role::create($request->all());
+
+        return redirect()->route('roles.index')
+            ->with('success', 'Role created successfully.');
     }
 
     /**
@@ -61,9 +59,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $role = Role::find($id);
 
-        return view('user.show', compact('user'));
+        return view('role.show', compact('role'));
     }
 
     /**
@@ -74,25 +72,26 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $personas = \App\Persona::get();
+        $role = Role::find($id);
 
-        return view('user.edit', compact('user','personas'));
+        return view('role.edit', compact('role'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  User $user
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Role $role)
     {
-        request()->validate(User::$rules);
-        $user->update($request->all());
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+        request()->validate(Role::$rules);
+
+        $role->update($request->all());
+
+        return redirect()->route('roles.index')
+            ->with('success', 'Role updated successfully');
     }
 
     /**
@@ -102,9 +101,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id)->delete();
+        $role = Role::find($id)->delete();
 
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+        return redirect()->route('roles.index')
+            ->with('success', 'Role deleted successfully');
     }
 }

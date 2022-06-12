@@ -5,28 +5,30 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class User
+ * Class Movimiento
  *
  * @property $id
- * @property $name
- * @property $email
- * @property $email_verified_at
- * @property $password
- * @property $remember_token
+ * @property $hora_de_entrada
+ * @property $hora_de_salida
+ * @property $persona_id
+ * @property $token_entrada
+ * @property $token_salida
  * @property $created_at
  * @property $updated_at
- * @property $persona_id
  *
  * @property Persona $persona
+ * @property Token $token
+ * @property Token $token
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class User extends Model
+class Movimiento extends Model
 {
     
     static $rules = [
-		'name' => 'required',
-		'email' => 'required',
+		'persona_id' => 'required',
+		'token_entrada' => 'required',
+		'token_salida' => 'required',
     ];
 
     protected $perPage = 20;
@@ -36,7 +38,7 @@ class User extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','email','persona_id','password'];
+    protected $fillable = ['hora_de_entrada','hora_de_salida','persona_id','token_entrada','token_salida'];
 
 
     /**
@@ -47,5 +49,7 @@ class User extends Model
         return $this->hasOne('App\Persona', 'id', 'persona_id');
     }
     
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
 }

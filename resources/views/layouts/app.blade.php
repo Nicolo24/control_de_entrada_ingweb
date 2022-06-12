@@ -52,6 +52,22 @@
                                 </li>
                             @endif
                         @else
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('casas.index') }}">{{ __('Casas') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('personas.index') }}">{{ __('Personas') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tokens.index') }}">{{ __('Tokens') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -70,6 +86,8 @@
                                 </div>
                             </li>
                         @endguest
+
+                            
                     </ul>
                 </div>
             </div>

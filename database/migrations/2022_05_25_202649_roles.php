@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('personas', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone')->unique();
-            $table->foreignId('casa_id')->nullable()->constrained();
-            $table->foreignId('role')->constrained();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('roles');
     }
 };

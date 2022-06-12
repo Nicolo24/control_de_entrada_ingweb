@@ -13,8 +13,26 @@
         </div>
         <div class="form-group">
             {{ Form::label('casa_id') }}
-            {{ Form::text('casa_id', $persona->casa_id, ['class' => 'form-control' . ($errors->has('casa_id') ? ' is-invalid' : ''), 'placeholder' => 'Casa Id']) }}
-            {!! $errors->first('casa_id', '<div class="invalid-feedback">:message</div>') !!}
+            <select name="casa_id" class="form-control">
+                <option></option><!--selected by default-->
+                @foreach($casas as $casa)
+                    <option value="{{ $casa->id }}" @if ($casa->id == $persona->casa_id) selected @endif>
+                        {{ $casa->friendly_id }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            {{ Form::label('role') }}
+            <select name="role" class="form-control">
+                <option></option><!--selected by default-->
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}" @if ($role->id == $persona->role) selected @endif>
+                        {{ $role->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
     </div>

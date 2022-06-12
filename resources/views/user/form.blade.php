@@ -13,8 +13,14 @@
         </div>
         <div class="form-group">
             {{ Form::label('persona_id') }}
-            {{ Form::text('persona_id', $user->persona_id, ['class' => 'form-control' . ($errors->has('persona_id') ? ' is-invalid' : ''), 'placeholder' => 'Persona Id']) }}
-            {!! $errors->first('persona_id', '<div class="invalid-feedback">:message</div>') !!}
+            <select name="persona_id" class="form-control">
+                <option></option><!--selected by default-->
+                @foreach($personas as $persona)
+                    <option value="{{ $persona->id }}" @if ($persona->id == $user->persona_id) selected @endif>
+                        {{ $persona->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
     </div>

@@ -32,7 +32,9 @@ class PersonaController extends Controller
     public function create()
     {
         $persona = new Persona();
-        return view('persona.create', compact('persona'));
+        $casas=\App\Casa::get();
+        $roles=\App\Role::get();
+        return view('persona.create', compact('persona','casas','roles'));
     }
 
     /**
@@ -73,8 +75,10 @@ class PersonaController extends Controller
     public function edit($id)
     {
         $persona = Persona::find($id);
+        $casas=\App\Casa::get();
+        $roles=\App\Role::get();
 
-        return view('persona.edit', compact('persona'));
+        return view('persona.edit', compact('persona','casas','roles'));
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $persona->name ?? 'Show Persona' }}
+    {{ $movimiento->name ?? 'Show Movimiento' }}
 @endsection
 
 @section('content')
@@ -11,32 +11,34 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Show Persona</span>
+                            <span class="card-title">Show Movimiento</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('personas.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('movimientos.index') }}"> Back</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Name:</strong>
-                            {{ $persona->name }}
+                            <strong>Hora De Entrada:</strong>
+                            {{ $movimiento->hora_de_entrada }}
                         </div>
                         <div class="form-group">
-                            <strong>Phone:</strong>
-                            <a href="http://wa.me/{{ $persona->phone }}" target="_blank">{{ $persona->phone }}</a>
+                            <strong>Hora De Salida:</strong>
+                            {{ $movimiento->hora_de_salida }}
                         </div>
                         <div class="form-group">
-                            <strong>Casa:</strong>
-                            @if ($persona->casa != null)
-                                {{ $persona->casa->friendly_id }}
-                            @endif
+                            <strong>Persona Id:</strong>
+                            {{ $movimiento->persona_id }}
                         </div>
                         <div class="form-group">
-                            <strong>Role:</strong>
-                            {{ $persona->role_->name }}
+                            <strong>Token Entrada:</strong>
+                            {{ $movimiento->token_entrada }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Token Salida:</strong>
+                            {{ $movimiento->token_salida }}
                         </div>
 
                     </div>

@@ -36,9 +36,10 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Casa Id</th>
+										<th>Nombre</th>
+										<th>Telefono</th>
+										<th>Casa</th>
+										<th>Rol</th>
 
                                         <th></th>
                                     </tr>
@@ -49,8 +50,9 @@
                                             <td>{{ ++$i }}</td>
                                             
 											<td>{{ $persona->name }}</td>
-											<td>{{ $persona->phone }}</td>
-											<td>{{ $persona->casa_id }}</td>
+											<td><a href="http://wa.me/{{ $persona->phone }}" target="_blank">{{ $persona->phone }}</a></td>
+											<td>@if ($persona->casa != null) {{ $persona->casa->friendly_id }} @endif</td>
+											<td>{{ $persona->role_->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('personas.destroy',$persona->id) }}" method="POST">

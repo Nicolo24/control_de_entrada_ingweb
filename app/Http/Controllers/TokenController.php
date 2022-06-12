@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Token;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 /**
- * Class UserController
+ * Class TokenController
  * @package App\Http\Controllers
  */
-class UserController extends Controller
+class TokenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
+        $tokens = Token::paginate();
 
-        return view('user.index', compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        return view('token.index', compact('tokens'))
+            ->with('i', (request()->input('page', 1) - 1) * $tokens->perPage());
     }
 
     /**
@@ -32,9 +31,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = new User();
-        $personas = \App\Persona::get();
-        return view('user.create', compact('user','personas'));
+        $token = new Token();
+        return view('token.create', compact('token'));
     }
 
     /**
@@ -45,12 +43,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
-        request()->validate(User::$rules);
-        
-        $user = User::create($request->all());
+        request()->validate(Token::$rules);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        $token = Token::create($request->all());
+
+        return redirect()->route('tokens.index')
+            ->with('success', 'Token created successfully.');
     }
 
     /**
@@ -61,9 +59,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $token = Token::find($id);
 
-        return view('user.show', compact('user'));
+        return view('token.show', compact('token'));
     }
 
     /**
@@ -74,25 +72,26 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $personas = \App\Persona::get();
+        $token = Token::find($id);
 
-        return view('user.edit', compact('user','personas'));
+        return view('token.edit', compact('token'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  User $user
+     * @param  Token $token
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Token $token)
     {
-        request()->validate(User::$rules);
-        $user->update($request->all());
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+        request()->validate(Token::$rules);
+
+        $token->update($request->all());
+
+        return redirect()->route('tokens.index')
+            ->with('success', 'Token updated successfully');
     }
 
     /**
@@ -102,9 +101,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id)->delete();
+        $token = Token::find($id)->delete();
 
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+        return redirect()->route('tokens.index')
+            ->with('success', 'Token deleted successfully');
     }
 }
