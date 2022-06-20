@@ -48,6 +48,15 @@ class Movimiento extends Model
     {
         return $this->hasOne('App\Persona', 'id', 'persona_id');
     }
+
+    public function token_entrada_()
+    {
+        return $this->hasOne('App\Token', 'id', 'token_entrada');
+    }
+    public function token_salida_()
+    {
+        return $this->hasOne('App\Token', 'id', 'token_salida');
+    }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

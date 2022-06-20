@@ -106,4 +106,27 @@ class MovimientoController extends Controller
         return redirect()->route('movimientos.index')
             ->with('success', 'Movimiento deleted successfully');
     }
+
+    public function create_for_me(Request $request){
+        $user=auth()->user();
+        $persona=\App\Persona::where('id',$user->persona_id)->first();
+        $token_entrada=new \App\Token();
+        $token_entrada->code=random_int(100000,999999);
+        $token_salida=new \App\Token();
+        $token_salida->code=random_int(100000,999999);
+        $token_entrada->save();
+        $token_salida->save();
+        $movimiento=new \App\Movimiento();
+        $movimiento->token_entrada=$token_entrada->id;
+        $movimiento->token_salida=$token_salida->id;
+        $movimiento->persona_id=$user->persona_id;
+        $movimiento->save();
+        
+        return redirect()->route('home');
+    }
+
+    public function create_for_else(Request $request){
+        return $request;
+    }
+
 }

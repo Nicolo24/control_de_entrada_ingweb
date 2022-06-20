@@ -2,46 +2,46 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-/**
- * Class User
- *
- * @property $id
- * @property $name
- * @property $email
- * @property $email_verified_at
- * @property $password
- * @property $remember_token
- * @property $created_at
- * @property $updated_at
- * @property $persona_id
- *
- * @property Persona $persona
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
-class User extends Model
+class User extends Authenticatable
 {
-    
-    static $rules = [
-		'name' => 'required',
-		'email' => 'required',
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
     ];
 
-    protected $perPage = 20;
-
     /**
-     * Attributes that should be mass-assignable.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $fillable = ['name','email','persona_id','password'];
-
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
     public function persona()
     {
         return $this->hasOne('App\Persona', 'id', 'persona_id');
