@@ -47,7 +47,7 @@
                                 <tbody>
                                     @foreach ($personas as $persona)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $persona->id }}</td>
                                             
 											<td>{{ $persona->name }}</td>
 											<td><a href="http://wa.me/{{ $persona->phone }}" target="_blank">{{ $persona->phone }}</a></td>

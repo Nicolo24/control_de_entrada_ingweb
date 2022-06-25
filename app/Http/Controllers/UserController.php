@@ -46,8 +46,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         
-        request()->validate(User::$rules);
-        
         $user = User::create($request->all());
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -89,8 +87,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        request()->validate(User::$rules);
         $user->update($request->all());
+        $user->persona_id=$request->persona_id;
+        $user->save();
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
     }

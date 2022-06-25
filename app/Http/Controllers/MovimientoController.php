@@ -101,7 +101,10 @@ class MovimientoController extends Controller
      */
     public function destroy($id)
     {
-        $movimiento = Movimiento::find($id)->delete();
+        $movimiento = Movimiento::find($id);
+        $movimiento->delete();
+        $movimiento->token_entrada_->delete();
+        $movimiento->token_salida_->delete();
 
         return redirect()->route('movimientos.index')
             ->with('success', 'Movimiento deleted successfully');
@@ -121,12 +124,66 @@ class MovimientoController extends Controller
         $movimiento->token_salida=$token_salida->id;
         $movimiento->persona_id=$user->persona_id;
         $movimiento->save();
-        
         return redirect()->route('home');
     }
 
     public function create_for_else(Request $request){
-        return $request;
+        
+        $persona=\App\Persona::where('id',$request->invitado_id)->first();
+        $token_entrada=new \App\Token();
+        $token_entrada->code=random_int(100000,999999);
+        $token_salida=new \App\Token();
+        $token_salida->code=random_int(100000,999999);
+        $token_entrada->save();
+        $token_salida->save();
+        $movimiento=new \App\Movimiento();
+        $movimiento->token_entrada=$token_entrada->id;
+        $movimiento->token_salida=$token_salida->id;
+        $movimiento->persona_id=$persona->id;
+        $movimiento->save();
+        return redirect()->route('home');
+    }
+
+    public function create_invitado(Request $request){
+        $request->role=4;
+        $request->casa_id=1;
+        $user=auth()->user();
+        $anfitrion=\App\Persona::where('id',$user->persona_id)->first();
+        $persona=new \App\Persona();
+
+        $persona->name=$request->name;
+        $persona->phone=$request->phone;
+        $persona->role=4;
+        $persona->casa_id=$anfitrion->casa_id;
+
+        $persona->save();
+        $request2= new Request([
+            'invitado_id'=>$persona->id
+        ]);
+
+        return $this->create_for_else($request2);
+
+    }
+
+    public function use_token(Request $request){
+        $movimiento=Movimiento::find($request->movimiento_id);
+        if ($movimiento->token_entrada==$request->token_id)
+        {
+            $movimiento->token_entrada_->valid=false;
+            $movimiento->token_entrada_->save();
+            $movimiento->hora_de_entrada=$movimiento->token_entrada_->updated_at;
+            $movimiento->save();
+
+        } 
+        elseif ($movimiento->token_salida==$request->token_id)
+        {
+            $movimiento->token_salida_->valid=false;
+            $movimiento->token_salida_->save();
+            $movimiento->hora_de_salida=$movimiento->token_salida_->updated_at;
+            $movimiento->save();
+
+        }
+        return redirect()->route('home');
     }
 
 }

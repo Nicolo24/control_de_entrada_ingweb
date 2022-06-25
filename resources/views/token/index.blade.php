@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach ($tokens as $token)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $token->id }}</td>
                                             
 											<td>{{ $token->code }}</td>
 											<td>{{ $token->valid }}</td>
