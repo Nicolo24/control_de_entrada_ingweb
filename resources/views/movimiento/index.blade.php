@@ -48,7 +48,7 @@
                                 <tbody>
                                     @foreach ($movimientos as $movimiento)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $movimiento->id }}</td>
                                             
 											<td>{{ $movimiento->hora_de_entrada }}</td>
 											<td>{{ $movimiento->hora_de_salida }}</td>

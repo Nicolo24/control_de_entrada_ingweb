@@ -73,9 +73,7 @@ class Movimiento extends Model
                 {
                     //si
                     return 'entro y luego salio'; //esta fuera
-                } 
-                else
-                {
+                } else {
                     //no
                     return 'salio y luego entro'; //esta dentro
                 }
@@ -108,9 +106,7 @@ class Movimiento extends Model
                 {
                     //si
                     return 2; //entro y luego salio
-                } 
-                else
-                {
+                } else {
                     //no
                     return 1; //salio y luego entro
                 }
@@ -126,8 +122,169 @@ class Movimiento extends Model
                 return 2; //salio pero no entro
             } else {
                 //no
-                return 3;//no hay datos
+                return 3; //no hay datos
             }
         }
     }
+
+    public function getRaroAttribute()
+    {
+
+        $start = strtotime('05:00');
+        $end = strtotime('22:00');
+
+        if (!$this->token_entrada_->valid) //entro?
+        {
+            //si
+            if (!$this->token_salida_->valid) //salio?
+            {
+                //si
+                $horaentrada = strtotime(explode(' ', $this->hora_de_entrada)[1]);
+                $horasalida = strtotime(explode(' ', $this->hora_de_salida)[1]);
+
+                if ($horaentrada > $start)
+                {
+                    if($horasalida>$start)
+                    {
+                        if($horaentrada>$end)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if($horasalida>$end)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            } 
+            else 
+            {
+                //no
+                //entro pero no salio
+                $horaentrada = strtotime(explode(' ', $this->hora_de_entrada)[1]);
+
+                if ($horaentrada > $start) {
+                    return $horaentrada > $end;
+                } else {
+                    return true;
+                }
+            }
+        } else {
+            //no
+            if (!$this->token_salida_->valid) //salio?
+            {
+                //si
+                //salio pero no entro
+                $horasalida = strtotime(explode(' ', $this->hora_de_salida)[1]);
+
+                if ($horasalida > $start) {
+                    if ($horasalida > $end){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            } else {
+                //no
+                //no hay datos
+                return false;
+            }
+        }
+    }
+
+    public function getRaronumAttribute()
+    {
+
+        $start = strtotime('05:00');
+        $end = strtotime('22:00');
+
+        if (!$this->token_entrada_->valid) //entro?
+        {
+            //si
+            if (!$this->token_salida_->valid) //salio?
+            {
+                //si
+                $horaentrada = strtotime(explode(' ', $this->hora_de_entrada)[1]);
+                $horasalida = strtotime(explode(' ', $this->hora_de_salida)[1]);
+
+                if ($horaentrada > $start)
+                {
+                    if($horasalida>$start)
+                    {
+                        if($horaentrada>$end)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            if($horasalida>$end)
+                            {
+                                return 2;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return 2;
+                    }
+                }
+                else
+                {
+                    return 1;
+                }
+            } 
+            else 
+            {
+                //no
+                //entro pero no salio
+                $horaentrada = strtotime(explode(' ', $this->hora_de_entrada)[1]);
+
+                if ($horaentrada > $start) {
+                    return $horaentrada > $end;
+                } else {
+                    return true;
+                }
+            }
+        } else {
+            //no
+            if (!$this->token_salida_->valid) //salio?
+            {
+                //si
+                //salio pero no entro
+                $horasalida = strtotime(explode(' ', $this->hora_de_salida)[1]);
+
+                if ($horasalida > $start) {
+                    return $horasalida > $end;
+                } else {
+                    return true;
+                }
+            } else {
+                //no
+                //no hay datos
+                return false;
+            }
+        }
+    }
+
 }

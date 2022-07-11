@@ -109,12 +109,15 @@
                             <th>Comportamiento</th>
                             <th>Token Entrada</th>
                             <th>Token Salida</th>
+                            <th>Raro</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($movimientos as $movimiento)
-                            <tr>
+                            <tr @if ($movimiento->raro%2)
+                                class="bg-danger"
+                            @endif>
                                 <td>{{ $movimiento->id }}</td>
                                 <td>{{ $movimiento->hora_de_entrada }}</td>
                                 <td>{{ $movimiento->hora_de_salida }}</td>
@@ -133,6 +136,7 @@
                                 <td>{{ $movimiento->behaviour }}</td>
                                 <td>{{ $movimiento->token_entrada_->code }}</td>
                                 <td>{{ $movimiento->token_salida_->code }}</td>
+                                <td>{{ $movimiento->raro }}</td>
                             </tr>
                         @endforeach
                     </tbody>
